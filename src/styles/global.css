@@ -1,1 +1,113 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0a;
+  --color-bg-light: #f5f0e8;
+  --color-text: #f0ece4;
+  --color-text-light: #1a1a1a;
+  --color-text-muted: #8a8680;
+  --color-text-muted-light: #6b6560;
+  --color-accent: #e8572a;
+  --color-border: #2a2725;
+  --color-border-light: #d5cfc5;
+  --color-surface: #141210;
+  --color-surface-light: #ebe5db;
+
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Source Serif 4', serif;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Section slide-in */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.6s ease-out both;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+/* Stagger delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+.delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.7s; }
+.delay-8 { animation-delay: 0.8s; }
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Theme base */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+.light body {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-light);
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .noise-overlay::before { display: none; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+}
