@@ -62,7 +62,7 @@ onMounted(() => {
       }
       updateActive()
     },
-    { threshold: 0.15, rootMargin: '-60px 0px -40% 0px' }
+   { threshold: 0.15, rootMargin: '-20% 0px -50% 0px' }
   )
 
   for (const id of sectionIds) {
