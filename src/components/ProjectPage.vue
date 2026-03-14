@@ -5,14 +5,14 @@ import type { Project } from '../data/projects'
 
 const props = defineProps<{ project: Project; lang: Lang }>()
 
-const isDark = ref(true)
+const isDark = ref(typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true)
 
 const t = computed(() => translations[props.lang])
 
 function toggleTheme() {
   isDark.value = !isDark.value
   localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-  document.documentElement.classList.toggle('light', !isDark.value)
+  document.documentElement.classList.toggle('dark', isDark.value)
 }
 
 const backHref = computed(() => props.lang === 'ru' ? '/ru/' : '/')
@@ -23,13 +23,7 @@ const altProjectHref = computed(() => {
 })
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme) {
-    isDark.value = savedTheme === 'dark'
-  } else {
-    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
-  }
-  document.documentElement.classList.toggle('light', !isDark.value)
+  isDark.value = document.documentElement.classList.contains('dark')
 })
 
 const p = props.project
@@ -38,38 +32,32 @@ const p = props.project
 <template>
   <div>
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 no-print"
-      :class="isDark ? 'bg-[#0a0a0aee] border-b border-[#2a2725]' : 'bg-[#f5f0e8ee] border-b border-[#d5cfc5]'">
+    <header class="fixed top-0 left-0 right-0 z-50 no-print bg-header-bg border-b border-border">
       <nav class="max-w-[780px] mx-auto px-6 h-12 flex items-center justify-between">
-        <a :href="backHref" class="font-mono text-sm hover:text-accent transition-colors"
-          :class="isDark ? 'text-[#d0ccc4]' : 'text-[#3a3530]'">
+        <a :href="backHref" class="font-mono text-sm hover:text-accent transition-colors text-link-text">
           {{ t.projects.backToHome }}
         </a>
         <div class="flex items-center gap-2">
           <!-- Language toggle — segmented control -->
-          <div class="flex font-mono text-xs rounded-full overflow-hidden"
-            :class="isDark ? 'bg-[#1a1816]' : 'bg-[#e5dfd5]'">
+          <div class="flex font-mono text-xs rounded-full overflow-hidden bg-tag-bg">
             <a :href="lang === 'en' ? '#' : `/projects/${p.slug}`"
               class="relative px-3 py-1.5 transition-all duration-200 rounded-full"
               :class="lang === 'en'
                 ? 'bg-accent text-white'
-                : isDark ? 'text-text-muted hover:text-text' : 'text-text-muted-light hover:text-text-light'">
+                : 'text-text-muted hover:text-text'">
               EN
             </a>
             <a :href="lang === 'ru' ? '#' : `/ru/projects/${p.slug}`"
               class="relative px-3 py-1.5 transition-all duration-200 rounded-full"
               :class="lang === 'ru'
                 ? 'bg-accent text-white'
-                : isDark ? 'text-text-muted hover:text-text' : 'text-text-muted-light hover:text-text-light'">
+                : 'text-text-muted hover:text-text'">
               RU
             </a>
           </div>
           <!-- Theme toggle — animated icon -->
           <button @click="toggleTheme"
-            class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none"
-            :class="isDark
-              ? 'bg-[#1a1816] hover:bg-[#2a2725] text-[#706a62] hover:text-accent'
-              : 'bg-[#e5dfd5] hover:bg-[#d5cfc5] text-[#3a3530] hover:text-accent'"
+            class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none bg-toggle-bg hover:bg-toggle-hover-bg text-toggle-text hover:text-accent"
             :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'">
             <svg class="w-4 h-4 absolute transition-all duration-300"
               :class="isDark ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90 scale-50'"
@@ -96,15 +84,14 @@ const p = props.project
 
     <main class="max-w-[720px] mx-auto px-6 pt-24 pb-20">
       <!-- Project Header -->
-      <div class="animate-fade-up">
+      <div>
         <div class="flex items-center gap-3 mb-4">
           <span class="w-3 h-3 rounded-full" :style="{ backgroundColor: p.color }"></span>
           <h1 class="font-mono text-3xl sm:text-5xl font-bold tracking-tight">
             {{ p.title[lang] }}
           </h1>
         </div>
-        <p class="text-lg leading-relaxed mb-6"
-          :class="isDark ? 'text-[#c8c4bc]' : 'text-[#3a3530]'">
+        <p class="text-lg leading-relaxed mb-6 text-body-text">
           {{ p.description[lang] }}
         </p>
         <a :href="p.repo" target="_blank" rel="noopener"
@@ -115,54 +102,46 @@ const p = props.project
       </div>
 
       <!-- Tech Stack -->
-      <section class="mt-16 animate-fade-up delay-1">
-        <h2 class="font-mono text-sm tracking-widest uppercase mb-1"
-          :class="isDark ? 'text-text-muted' : 'text-text-muted-light'">
+      <section class="mt-16">
+        <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           // tech stack
         </h2>
-        <hr class="mb-6" :class="isDark ? 'border-[#2a2725]' : 'border-[#d5cfc5]'" />
+        <hr class="mb-6 border-border" />
         <div class="flex flex-wrap gap-2">
           <span v-for="tech in p.tech" :key="tech"
-            class="font-mono text-xs px-3 py-1.5 rounded-sm border transition-colors duration-200"
-            :class="isDark
-              ? 'border-[#2a2725] text-[#c8c4bc] hover:border-accent hover:text-accent'
-              : 'border-[#d5cfc5] text-[#4a4540] hover:border-accent hover:text-accent'">
+            class="font-mono text-xs px-3 py-1.5 rounded-sm border transition-colors duration-200 border-border text-body-text hover:border-accent hover:text-accent">
             {{ tech }}
           </span>
         </div>
       </section>
 
       <!-- Features -->
-      <section class="mt-16 animate-fade-up delay-2">
-        <h2 class="font-mono text-sm tracking-widest uppercase mb-1"
-          :class="isDark ? 'text-text-muted' : 'text-text-muted-light'">
+      <section class="mt-16">
+        <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           // features
         </h2>
-        <hr class="mb-6" :class="isDark ? 'border-[#2a2725]' : 'border-[#d5cfc5]'" />
+        <hr class="mb-6 border-border" />
         <ul class="space-y-3 list-none">
           <li v-for="(f, i) in p.features[lang]" :key="i"
-            class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0"
-            :class="isDark ? 'text-[#b8b4ac] before:text-accent' : 'text-[#4a4540] before:text-accent'">
+            class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 text-desc-text before:text-accent">
             {{ f }}
           </li>
         </ul>
       </section>
 
       <!-- Architecture -->
-      <section class="mt-16 animate-fade-up delay-3">
-        <h2 class="font-mono text-sm tracking-widest uppercase mb-1"
-          :class="isDark ? 'text-text-muted' : 'text-text-muted-light'">
+      <section class="mt-16">
+        <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           // architecture
         </h2>
-        <hr class="mb-6" :class="isDark ? 'border-[#2a2725]' : 'border-[#d5cfc5]'" />
-        <p class="text-sm leading-relaxed"
-          :class="isDark ? 'text-[#b8b4ac]' : 'text-[#4a4540]'">
+        <hr class="mb-6 border-border" />
+        <p class="text-sm leading-relaxed text-desc-text">
           {{ p.architecture[lang] }}
         </p>
       </section>
 
       <!-- Back link -->
-      <div class="mt-16 pt-6" :class="isDark ? 'border-t border-[#2a2725]' : 'border-t border-[#d5cfc5]'">
+      <div class="mt-16 pt-6 border-t border-border">
         <a :href="backHref" class="font-mono text-sm text-accent hover:underline">
           {{ t.projects.backToHome }}
         </a>
