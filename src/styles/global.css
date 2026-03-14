@@ -1,1 +1,160 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: #f5f0e8;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b6560;
+  --color-accent: #e8572a;
+  --color-border: #d5cfc5;
+  --color-surface: #ebe5db;
+  --color-header-bg: #f5f0e8ee;
+  --color-body-text: #3a3530;
+  --color-desc-text: #4a4540;
+  --color-link-text: #3a3530;
+  --color-tag-bg: #e5dfd5;
+  --color-project-desc: #6b6560;
+  --color-toggle-bg: #e5dfd5;
+  --color-toggle-hover-bg: #d5cfc5;
+  --color-toggle-text: #3a3530;
+
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Source Serif 4', serif;
+}
+
+.dark {
+  --color-bg: #0a0a0a;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8680;
+  --color-border: #2a2725;
+  --color-surface: #141210;
+  --color-header-bg: #0a0a0aee;
+  --color-body-text: #c8c4bc;
+  --color-desc-text: #b8b4ac;
+  --color-link-text: #d0ccc4;
+  --color-tag-bg: #1a1816;
+  --color-project-desc: #a8a4a0;
+  --color-toggle-bg: #1a1816;
+  --color-toggle-hover-bg: #2a2725;
+  --color-toggle-text: #706a62;
+}
+
+/* Twinkling stars (dark mode) / floating dust (light mode) */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes float-dust {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(2px 2px at 8% 15%, #9a8a70 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 20% 50%, #8a7a60 50%, transparent 100%),
+    radial-gradient(2px 2px at 35% 25%, #9a8a70 50%, transparent 100%),
+    radial-gradient(1px 1px at 45% 70%, #8a7a60 50%, transparent 100%),
+    radial-gradient(2px 2px at 58% 12%, #9a8a70 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 65% 82%, #8a7a60 50%, transparent 100%),
+    radial-gradient(1px 1px at 75% 40%, #9a8a70 50%, transparent 100%),
+    radial-gradient(2px 2px at 85% 65%, #8a7a60 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 92% 30%, #9a8a70 50%, transparent 100%),
+    radial-gradient(1px 1px at 12% 88%, #8a7a60 50%, transparent 100%);
+  background-size: 100% 900px, 100% 700px, 100% 900px, 100% 700px, 100% 900px,
+    100% 700px, 100% 900px, 100% 700px, 100% 900px, 100% 700px;
+  background-repeat: repeat-y;
+  opacity: 0.6;
+  animation: float-dust 9s ease-in-out infinite;
+}
+
+.dark body::after {
+  background-image:
+    radial-gradient(1.5px 1.5px at 5% 12%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 45%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 20%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 8%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 68% 35%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 82% 15%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 92% 40%, #ffffff 50%, transparent 100%),
+    radial-gradient(2px 2px at 10% 70%, #ffffff 50%, transparent 100%),
+    radial-gradient(2px 2px at 48% 85%, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 30% 55%, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 65% 25%, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 95% 60%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 42% 62%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 75% 80%, #ffffff 50%, transparent 100%),
+    radial-gradient(2px 2px at 22% 38%, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 88% 72%, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 92%, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 78% 48%, #ffffff 50%, transparent 100%);
+  background-size: 100% 800px, 100% 1100px, 100% 800px, 100% 1100px, 100% 800px, 100% 1100px,
+    100% 800px, 100% 1100px, 100% 800px, 100% 1100px, 100% 800px, 100% 1100px,
+    100% 900px, 100% 700px, 100% 900px, 100% 700px, 100% 900px, 100% 700px;
+  background-repeat: repeat-y;
+  opacity: 1;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Theme base — background on html so body::after (z-index: -1) stays visible */
+html {
+  background-color: var(--color-bg);
+  transition: background-color 0.4s ease;
+}
+body {
+  position: relative;
+  background-color: transparent;
+  color: var(--color-text);
+  transition: color 0.4s ease;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  html {
+    background: white !important;
+  }
+  body {
+    color: black !important;
+  }
+  body::after { display: none; }
+  .noise-overlay::before { display: none; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}

@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import ProjectPage from '../../components/ProjectPage.vue'
+import { projects } from '../../data/projects'
+
+export function getStaticPaths() {
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }))
+}
+
+const { project } = Astro.props
+---
+
+<Layout title={`${project.title.en} — Danila Dysa`} description={project.description.en} lang="en">
+  <ProjectPage project={project} lang="en" client:load />
+</Layout>

@@ -1,0 +1,11 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CV from '../../components/CV.vue'
+import { translations } from '../../i18n/translations'
+
+const t = translations.ru
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang="ru">
+  <CV lang="ru" client:load />
+</Layout>

@@ -1,9 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro'
+import CV from '../components/CV.vue'
+import { translations } from '../i18n/translations'
+
+const t = translations.en
 ---
 
-<Layout>
-	<div class="w-screen h-screen flex items-center justify-center">
-		hello world
-	</div>
+<Layout title={t.meta.title} description={t.meta.description} lang="en">
+  <CV lang="en" client:load />
 </Layout>

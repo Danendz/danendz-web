@@ -1,17 +1,63 @@
+---
+interface Props {
+  title?: string
+  description?: string
+  lang?: 'en' | 'ru'
+}
+
+const { title = 'Danila Dysa — Fullstack Developer', description = 'Fullstack developer with 2+ years of experience building web and mobile applications.', lang = 'en' } = Astro.props
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- OG Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://danendz.com" />
+
+    <!-- Fonts — block rendering until loaded to prevent FOUT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=block" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=block" rel="stylesheet" />
+
+    <!-- Prevent FOUC: apply theme before paint -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const isDark = saved ? saved === 'dark' : prefersDark
+        if (isDark) document.documentElement.classList.add('dark')
+      })()
+    </script>
+
+    <!-- Auto-detect language on first visit -->
+    <script is:inline>
+      (function() {
+        if (!localStorage.getItem('lang_redirected')) {
+          localStorage.setItem('lang_redirected', '1')
+          if (navigator.language.startsWith('ru') && !location.pathname.startsWith('/ru')) {
+            location.replace('/ru' + location.pathname)
+          }
+        }
+      })()
+    </script>
+  </head>
+  <body class="font-serif noise-overlay min-h-screen">
+    <slot />
+  </body>
 </html>
 
-<style>
-	@import '../styles/global.css';
+<style is:global>
+  @import '../styles/global.css';
 </style>
