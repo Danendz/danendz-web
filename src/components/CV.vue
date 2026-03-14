@@ -8,6 +8,11 @@ const props = defineProps<{ lang: Lang }>()
 
 const isDark = ref(typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true)
 const activeSection = ref('')
+const menuOpen = ref(false)
+
+function closeMenu() {
+  menuOpen.value = false
+}
 const sectionsVisible = ref<Set<string>>(new Set())
 
 const t = computed(() => translations[props.lang])
@@ -23,31 +28,55 @@ function toggleTheme() {
   document.documentElement.classList.toggle('dark', isDark.value)
 }
 
-// Active section tracking
+// Active section tracking via IntersectionObserver + scroll for bottom detection
 let observer: IntersectionObserver | null = null
+let onScroll: (() => void) | null = null
 
 onMounted(() => {
   isDark.value = document.documentElement.classList.contains('dark')
 
-  // Intersection observer for active nav tracking
+  const sectionIds = ['about', 'experience', 'skills', 'education', 'projects', 'contact']
+
+  function updateActive() {
+    const nearBottom = document.documentElement.scrollHeight - window.scrollY - window.innerHeight < 50
+    if (nearBottom) {
+      activeSection.value = 'contact'
+      return
+    }
+    for (let i = sectionIds.length - 1; i >= 0; i--) {
+      if (sectionsVisible.value.has(sectionIds[i])) {
+        activeSection.value = sectionIds[i]
+        return
+      }
+    }
+  }
+
   observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         if (entry.isIntersecting) {
-          activeSection.value = entry.target.id
+          sectionsVisible.value.add(entry.target.id)
+        } else {
+          sectionsVisible.value.delete(entry.target.id)
         }
-      })
+      }
+      updateActive()
     },
-    { threshold: 0.15, rootMargin: '-80px 0px -40% 0px' }
+    { threshold: 0.15, rootMargin: '-60px 0px -40% 0px' }
   )
 
-  document.querySelectorAll('section[id]').forEach((el) => {
-    observer!.observe(el)
-  })
+  for (const id of sectionIds) {
+    const el = document.getElementById(id)
+    if (el) observer.observe(el)
+  }
+
+  onScroll = updateActive
+  window.addEventListener('scroll', onScroll, { passive: true })
 })
 
 onUnmounted(() => {
   observer?.disconnect()
+  if (onScroll) window.removeEventListener('scroll', onScroll)
 })
 
 function projectTitle(p: typeof projects[0]) {
@@ -68,11 +97,18 @@ function projectHref(slug: string) {
     <header class="fixed top-0 left-0 right-0 z-50 no-print bg-header-bg border-b border-border">
       <nav class="max-w-[780px] mx-auto px-6 h-12 flex items-center justify-between">
         <div class="flex items-center gap-5 text-xs font-mono tracking-wide">
+          <!-- Hamburger button (mobile only) -->
+          <button @click="menuOpen = !menuOpen" class="sm:hidden relative w-5 h-4 flex flex-col justify-between" aria-label="Menu">
+            <span class="block w-full h-0.5 bg-current transition-all duration-300 origin-center text-text-muted"
+              :class="menuOpen ? 'rotate-45 translate-y-[7px]' : ''"></span>
+            <span class="block w-full h-0.5 bg-current transition-all duration-300 origin-center text-text-muted"
+              :class="menuOpen ? '-rotate-45 -translate-y-[7px]' : ''"></span>
+          </button>
           <a v-for="key in ['about', 'experience', 'skills', 'education', 'projects', 'contact']"
             :key="key"
             :href="`#${key}`"
-            class="hidden sm:inline-block transition-colors duration-200 text-text-muted hover:text-text"
-            :class="activeSection === key ? 'text-accent' : ''">
+            class="hidden sm:inline-block transition-colors duration-200"
+            :class="activeSection === key ? 'text-accent' : 'text-text-muted hover:text-text'">
             {{ t.nav[key as keyof typeof t.nav] }}
           </a>
         </div>
@@ -119,11 +155,34 @@ function projectHref(slug: string) {
           </button>
         </div>
       </nav>
+      <!-- Mobile nav panel -->
+      <Transition
+        enter-active-class="transition-[grid-template-rows,opacity] duration-300 ease-out"
+        leave-active-class="transition-[grid-template-rows,opacity] duration-200 ease-in"
+        enter-from-class="grid-rows-[0fr] opacity-0"
+        enter-to-class="grid-rows-[1fr] opacity-100"
+        leave-from-class="grid-rows-[1fr] opacity-100"
+        leave-to-class="grid-rows-[0fr] opacity-0">
+        <div v-show="menuOpen" class="sm:hidden grid border-t border-border bg-header-bg">
+          <div class="overflow-hidden">
+            <div class="max-w-[780px] mx-auto px-6 py-3 flex flex-col gap-2">
+              <a v-for="key in ['about', 'experience', 'skills', 'education', 'projects', 'contact']"
+                :key="key"
+                :href="`#${key}`"
+                @click="closeMenu"
+                class="font-mono text-sm py-1.5 transition-colors duration-200"
+                :class="activeSection === key ? 'text-accent' : 'text-text-muted hover:text-text'">
+                {{ t.nav[key as keyof typeof t.nav] }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </Transition>
     </header>
 
     <main class="max-w-[720px] mx-auto px-6 pt-24 pb-20">
       <!-- Hero -->
-      <section id="about">
+      <section id="about" class="scroll-mt-24">
         <h1 class="font-mono text-5xl sm:text-7xl font-bold tracking-tight leading-none mb-3">
           {{ t.hero.name }}
         </h1>
@@ -137,7 +196,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Experience -->
-      <section id="experience" class="mt-24">
+      <section id="experience" class="mt-24 scroll-mt-24">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.experience.sectionLabel }}
         </h2>
@@ -167,7 +226,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Skills -->
-      <section id="skills" class="mt-24">
+      <section id="skills" class="mt-24 scroll-mt-24">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.skills.sectionLabel }}
         </h2>
@@ -187,7 +246,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Education -->
-      <section id="education" class="mt-24">
+      <section id="education" class="mt-24 scroll-mt-24">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.education.sectionLabel }}
         </h2>
@@ -215,7 +274,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Projects -->
-      <section id="projects" class="mt-24">
+      <section id="projects" class="mt-24 scroll-mt-24">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.projects.sectionLabel }}
         </h2>
@@ -251,7 +310,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Contact -->
-      <section id="contact" class="mt-24">
+      <section id="contact" class="mt-24 scroll-mt-24">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.contact.sectionLabel }}
         </h2>
