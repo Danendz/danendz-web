@@ -86,7 +86,7 @@ export const translations = {
         },
         backend: {
           label: 'Backend',
-          items: ['Laravel', 'GoFiber', 'NestJS', 'ExpressJS', 'RabbitMQ', 'PostgreSQL', 'MongoDB', 'JWT'],
+          items: ['Laravel', 'GoFiber', 'NestJS', 'ExpressJS', 'PostgreSQL', 'MongoDB', 'JWT'],
         },
         mobile: {
           label: 'Mobile',
@@ -220,7 +220,7 @@ export const translations = {
         },
         backend: {
           label: 'Backend',
-          items: ['Laravel', 'GoFiber', 'NestJS', 'ExpressJS', 'RabbitMQ', 'PostgreSQL', 'MongoDB', 'JWT'],
+          items: ['Laravel', 'GoFiber', 'NestJS', 'ExpressJS', 'PostgreSQL', 'MongoDB', 'JWT'],
         },
         mobile: {
           label: 'Мобильная',
