@@ -7,10 +7,49 @@ export interface Project {
   features: { en: string[]; ru: string[] }
   architecture: { en: string; ru: string }
   repo: string
+  url?: string
   color: string
 }
 
 export const projects: Project[] = [
+  {
+    slug: 'wuhan-mahjong',
+    title: { en: 'Wuhan Mahjong', ru: 'Wuhan Mahjong' },
+    subtitle: {
+      en: 'Real-time multiplayer mahjong game',
+      ru: 'Многопользовательская игра в маджонг',
+    },
+    description: {
+      en: 'A real-time multiplayer Wuhan Mahjong game (红中赖子杠). Play with friends online or practice against AI bots with configurable difficulty. Features room-based gameplay, full Wuhan rules with wild cards, reconnection support, and a multiplicative scoring system.',
+      ru: 'Многопользовательская онлайн-игра в маджонг Ухань (红中赖子杠). Играйте с друзьями онлайн или тренируйтесь против ИИ-ботов с настраиваемой сложностью. Включает игру по комнатам, полные правила уханьского маджонга с джокерами, поддержку переподключения и мультипликативную систему подсчёта очков.',
+    },
+    tech: ['Vue 3', 'TypeScript', 'Go', 'PostgreSQL', 'WebSocket', 'Pinia', 'Docker', 'Vite'],
+    features: {
+      en: [
+        'Real-time 4-player games via WebSocket connections',
+        'AI bots with easy, medium, and hard difficulty levels',
+        'Room-based gameplay with shareable room codes',
+        'Full Wuhan mahjong rules: wild cards, rob kong, kong draw win, last tile win, 258 pair rule',
+        'Guest mode with no login required',
+        'Seamless reconnection support after disconnection',
+      ],
+      ru: [
+        'Игры в реальном времени на 4 игрока через WebSocket',
+        'ИИ-боты с лёгким, средним и сложным уровнями сложности',
+        'Игра по комнатам с кодами для приглашения друзей',
+        'Полные правила маджонга Ухань: джокеры, перехват конга, выигрыш с конга, выигрыш последней плиткой, правило пары 258',
+        'Гостевой режим без необходимости входа',
+        'Бесшовное переподключение после разрыва соединения',
+      ],
+    },
+    architecture: {
+      en: 'Vue 3 frontend with Pinia stores and composables for WebSocket/game state. Go backend with game engine (tiles, hand validation, scoring), room management, WebSocket handler, and AI bot logic. Shared types via JSON Schema with code generation for both languages.',
+      ru: 'Фронтенд на Vue 3 с Pinia-сторами и composables для WebSocket/игрового состояния. Бэкенд на Go с игровым движком (плитки, валидация руки, подсчёт очков), управлением комнатами, WebSocket-обработчиком и логикой ИИ-ботов. Общие типы через JSON Schema с кодогенерацией для обоих языков.',
+    },
+    repo: 'https://github.com/Danendz/mahjong',
+    url: 'https://mahjong.danendz.com',
+    color: '#E53935',
+  },
   {
     slug: 'marquer-mobile',
     title: { en: 'Marquer Mobile', ru: 'Marquer Mobile' },
