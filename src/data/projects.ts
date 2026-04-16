@@ -8,10 +8,47 @@ export interface Project {
   architecture: { en: string; ru: string }
   repo: string
   url?: string
+  npm?: string
   color: string
 }
 
 export const projects: Project[] = [
+  {
+    slug: 'vite-dev-tools',
+    title: { en: 'Vite Dev Tools', ru: 'Vite Dev Tools' },
+    subtitle: {
+      en: 'AI-powered devtools for Vite',
+      ru: 'Devtools с ИИ для Vite',
+    },
+    description: {
+      en: 'Lightweight devtools overlay for Vite. Inspect your component tree, capture console errors, and jump to source — all without leaving the browser. Built-in MCP server lets AI agents query and control your running app.',
+      ru: 'Легковесная панель инструментов для Vite. Инспектируйте дерево компонентов, перехватывайте ошибки консоли и переходите к исходному коду — всё прямо в браузере. Встроенный MCP-сервер позволяет ИИ-агентам запрашивать и управлять вашим работающим приложением.',
+    },
+    tech: ['TypeScript', 'Vite', 'Preact', 'MCP'],
+    features: {
+      en: [
+        'No browser extension needed — works inline within the app',
+        'Click-to-edit with persistent source file writes',
+        'React 18+ and Vue 3.3+ support in one plugin',
+        'Built-in MCP server with 16 tools for AI agents',
+        'Dockable, resizable panel with component tree, props editor, and console tabs',
+      ],
+      ru: [
+        'Не нужно расширение браузера — работает прямо в приложении',
+        'Клик для редактирования с сохранением изменений в исходные файлы',
+        'Поддержка React 18+ и Vue 3.3+ в одном плагине',
+        'Встроенный MCP-сервер с 16 инструментами для ИИ-агентов',
+        'Закрепляемая, масштабируемая панель с деревом компонентов, редактором пропсов и вкладкой консоли',
+      ],
+    },
+    architecture: {
+      en: 'Vite plugin injects a Preact-based overlay rendered inside a Shadow DOM for style isolation. Component tree inspection uses framework-specific adapters for React and Vue. An integrated MCP server (stdio transport) exposes 16 tools for AI agents to query the component tree, read props/state, highlight elements, and interact with the running app.',
+      ru: 'Vite-плагин внедряет оверлей на Preact, отрисованный внутри Shadow DOM для изоляции стилей. Инспекция дерева компонентов использует адаптеры для React и Vue. Интегрированный MCP-сервер (stdio-транспорт) предоставляет 16 инструментов для ИИ-агентов для запросов к дереву компонентов, чтения пропсов/состояния, подсветки элементов и взаимодействия с работающим приложением.',
+    },
+    repo: 'https://github.com/Danendz/vite-dev-tools',
+    npm: 'https://www.npmjs.com/package/@danendz/vite-dev-tools',
+    color: '#8B5CF6',
+  },
   {
     slug: 'wuhan-mahjong',
     title: { en: 'Wuhan Mahjong', ru: 'Wuhan Mahjong' },
