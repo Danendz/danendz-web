@@ -11,7 +11,8 @@ export const translations = {
       experience: 'Experience',
       skills: 'Skills',
       education: 'Education',
-      projects: 'Projects',
+      commercial: 'Commercial',
+      projects: 'Personal',
       contact: 'Contact',
     },
     hero: {
@@ -28,8 +29,8 @@ export const translations = {
         {
           company: 'WEB THEMES DEVELOPMENT',
           role: 'Fullstack Developer',
-          period: 'Jun 2025 — Present',
-          duration: '10 months',
+          period: 'Jun 2025 — Jun 2026',
+          duration: '1 year 1 month',
           description: [
             'Fullstack WordPress developer — plugins, themes, backend (REST API, AJAX) and frontend (JS, jQuery, React)',
             'OpenAI API integration — auto-generation of images, text, and JSON for courses, lessons, FAQ, and quizzes, significantly reducing manual content work',
@@ -61,18 +62,6 @@ export const translations = {
             'Full Vite configuration and custom plugin development for project needs',
             'Integrated face recognition service for user identification',
             'Built a script to generate .d.ts type files across micro-frontend projects',
-          ],
-        },
-        {
-          company: 'Inroomer',
-          role: 'Frontend Developer',
-          period: 'Aug — Dec 2024',
-          duration: '5 months',
-          description: [
-            'Built an internal hotel management system focused on streamlining operations',
-            'Developed booking management with DayPilot Scheduler for efficient resource planning',
-            'Integrated with Airbnb and Bronevik platforms for cross-platform booking management',
-            'Tech: Vue 3, Vuetify, Pinia, TypeScript, DayPilot Scheduler',
           ],
         },
       ],
@@ -116,11 +105,20 @@ export const translations = {
         { name: 'English', level: 'B2 — Upper Intermediate' },
       ],
     },
+    commercial: {
+      sectionLabel: '// commercial projects',
+      subtitle: 'Production work for clients and companies',
+    },
     projects: {
-      sectionLabel: '// projects',
+      sectionLabel: '// personal projects',
       subtitle: 'Personal ecosystem of services',
       viewProject: 'View details',
       backToHome: '← Back to CV',
+      techStack: '// tech stack',
+      features: '// features',
+      myRole: '// my role',
+      architecture: '// architecture',
+      screenshots: '// screenshots',
     },
     contact: {
       sectionLabel: '// contact',
@@ -132,7 +130,7 @@ export const translations = {
       preferred: 'preferred',
     },
     footer: {
-      updated: 'Last updated March 2026',
+      updated: 'Last updated August 2026',
     },
   },
   ru: {
@@ -145,7 +143,8 @@ export const translations = {
       experience: 'Опыт',
       skills: 'Навыки',
       education: 'Образование',
-      projects: 'Проекты',
+      commercial: 'Коммерческие',
+      projects: 'Личные',
       contact: 'Контакты',
     },
     hero: {
@@ -162,8 +161,8 @@ export const translations = {
         {
           company: 'WEB THEMES DEVELOPMENT',
           role: 'Fullstack-разработчик',
-          period: 'Июн 2025 — настоящее время',
-          duration: '10 месяцев',
+          period: 'Июн 2025 — Июн 2026',
+          duration: '1 год 1 месяц',
           description: [
             'Фуллстек WordPress-разработчик — плагины, темы, бэкенд (REST API, AJAX) и фронтенд (JS, jQuery, React)',
             'Интеграция OpenAI API — автогенерация изображений, текстов и JSON для создания курсов, уроков, FAQ и квизов, что значительно сократило ручную работу по контенту',
@@ -195,18 +194,6 @@ export const translations = {
             'Полная настройка Vite и написание кастомных плагинов под нужды проекта',
             'Интегрирование сервиса распознавания лиц для идентификации пользователя',
             'Скрипт генерации .d.ts файлов для типов с разных micro-frontend проектов',
-          ],
-        },
-        {
-          company: 'Inroomer',
-          role: 'Frontend-разработчик',
-          period: 'Авг — Дек 2024',
-          duration: '5 месяцев',
-          description: [
-            'Создание внутренней системы управления отелем для оптимизации операционных процессов',
-            'Реализация планировщика бронирований с использованием DayPilot Scheduler',
-            'Интеграция с платформами бронирования Airbnb и Bronevik для кроссплатформенного управления',
-            'Технологии: Vue 3, Vuetify, Pinia, TypeScript, DayPilot Scheduler',
           ],
         },
       ],
@@ -250,11 +237,20 @@ export const translations = {
         { name: 'Английский', level: 'B2 — Upper Intermediate' },
       ],
     },
+    commercial: {
+      sectionLabel: '// коммерческие проекты',
+      subtitle: 'Продакшн-работа для клиентов и компаний',
+    },
     projects: {
-      sectionLabel: '// проекты',
+      sectionLabel: '// личные проекты',
       subtitle: 'Персональная экосистема сервисов',
       viewProject: 'Подробнее',
       backToHome: '← Назад к CV',
+      techStack: '// стек технологий',
+      features: '// возможности',
+      myRole: '// моя роль',
+      architecture: '// архитектура',
+      screenshots: '// скриншоты',
     },
     contact: {
       sectionLabel: '// контакты',
@@ -266,7 +262,7 @@ export const translations = {
       preferred: 'предпочтительно',
     },
     footer: {
-      updated: 'Обновлено в марте 2026',
+      updated: 'Обновлено в августе 2026',
     },
   },
 } as const
