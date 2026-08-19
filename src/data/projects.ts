@@ -1,12 +1,24 @@
+import modmateMain from '../assets/projects/images/modmate/modmate-main-page.webp'
+import modmateMaterials from '../assets/projects/images/modmate/modmate-materials-page.webp'
+import modmateBlogs from '../assets/projects/images/modmate/modmate-blogs-page.webp'
+
 export interface Project {
   slug: string
+  category: 'commercial' | 'personal'
   title: { en: string; ru: string }
   subtitle: { en: string; ru: string }
   description: { en: string; ru: string }
   tech: string[]
   features: { en: string[]; ru: string[] }
-  architecture: { en: string; ru: string }
-  repo: string
+  /** How the system is built. Omitted for commercial work with no public write-up. */
+  architecture?: { en: string; ru: string }
+  /** What I personally did — distinct from how the system is designed. */
+  role?: { en: string; ru: string }
+  /** Shown for commercial work where the engagement was time-bounded. */
+  period?: { en: string; ru: string }
+  images?: ImageMetadata[]
+  /** Absent for commercial work, which has no public repository. */
+  repo?: string
   url?: string
   npm?: string
   color: string
@@ -14,7 +26,91 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: 'modmate',
+    category: 'commercial',
+    title: { en: 'Modmate', ru: 'Modmate' },
+    subtitle: {
+      en: 'Renovation & interior design marketplace',
+      ru: 'Маркетплейс ремонта и дизайна интерьеров',
+    },
+    description: {
+      en: 'Modmate (modmate.uz) is a web platform for the renovation, construction and interior design market in Uzbekistan. The idea is simple: bring everyone involved in a renovation into one place, so a client doesn\'t have to hunt for materials on one site, contractors on another, and then build an estimate in a spreadsheet.',
+      ru: 'Modmate (modmate.uz) — веб-платформа для рынка ремонта, строительства и дизайна интерьеров в Узбекистане. Идея простая: собрать в одном месте всех, кто участвует в ремонте, чтобы клиенту не приходилось искать материалы в одном месте, мастеров в другом, а смету считать в таблице.',
+    },
+    tech: [
+      'Vue 3',
+      'TypeScript',
+      'Vite',
+      'Vue Router',
+      'Pinia',
+      'TanStack Query',
+      'Axios',
+      'Tailwind CSS',
+      'Vuetify',
+      'Reka UI',
+      'ESLint',
+      'Prettier',
+    ],
+    features: {
+      en: [
+        'Role-based experience — during sign-up a user picks a role: private client, designer or design studio, builder, materials supplier, or manufacturer of furniture and decor. The role shapes the entire interface after that',
+        'Step-by-step registration wizard with OTP phone verification and a separate company details step for business accounts',
+        'Catalog of materials and shops with categories, filters by price, properties, shops and product attributes, sorting, and detailed product pages with technical parameters, usage scenarios and seller info',
+        'Separate sections for specialists, shops, a blog and favorites',
+        'Projects and estimates — a client creates a project, splits it into rooms, adds materials to a specific room straight from the catalog, and ends up with a ready estimate that can be printed or downloaded',
+        'Portfolio of works for contractors, plus phone and email verification, notifications and multi-language support in the profile',
+      ],
+      ru: [
+        'Ролевой интерфейс — при регистрации пользователь выбирает свою роль: частный клиент, дизайнер или дизайн-студия, строитель, поставщик материалов, производитель мебели и декора. От роли зависит весь дальнейший интерфейс',
+        'Пошаговый мастер регистрации с подтверждением номера по OTP и отдельным шагом с данными компании для бизнес-аккаунтов',
+        'Каталог материалов и магазинов: категории, фильтры по цене, характеристикам, магазинам и свойствам товара, сортировка, детальные карточки с техническими параметрами, сценариями применения и информацией о продавце',
+        'Отдельные разделы со специалистами, магазинами, блогом и избранным',
+        'Проекты и сметы — клиент создаёт проект, разбивает его на комнаты, добавляет материалы в конкретное помещение прямо из каталога и получает готовую смету, которую можно распечатать или скачать',
+        'Портфолио работ у исполнителей, верификация телефона и почты, уведомления и мультиязычность в профиле',
+      ],
+    },
+    role: {
+      en: 'I worked on the frontend: application architecture, the design system and UI kit, the API layer, role-based logic, and responsive layouts for mobile.',
+      ru: 'Я отвечал за фронтенд: архитектуру приложения, дизайн-систему и UI-kit, работу с API, ролевую логику и адаптивную вёрстку под мобильные устройства.',
+    },
+    images: [modmateMain, modmateMaterials, modmateBlogs],
+    url: 'https://modmate.uz',
+    color: '#F59E0B',
+  },
+  {
+    slug: 'inroomer',
+    category: 'commercial',
+    title: { en: 'Inroomer', ru: 'Inroomer' },
+    subtitle: {
+      en: 'Internal hotel management system',
+      ru: 'Внутренняя система управления отелем',
+    },
+    description: {
+      en: 'An internal hotel management system built to streamline day-to-day operations. Booking management runs on DayPilot Scheduler for resource planning, with integrations into Airbnb and Bronevik so reservations from external platforms are handled in one place.',
+      ru: 'Внутренняя система управления отелем для оптимизации операционных процессов. Управление бронированиями построено на DayPilot Scheduler для планирования ресурсов, а интеграции с Airbnb и Bronevik позволяют работать с бронями внешних платформ в одном месте.',
+    },
+    tech: ['Vue 3', 'Vuetify', 'Pinia', 'TypeScript', 'DayPilot Scheduler'],
+    features: {
+      en: [
+        'Built an internal hotel management system focused on streamlining operations',
+        'Developed booking management with DayPilot Scheduler for efficient resource planning',
+        'Integrated with Airbnb and Bronevik platforms for cross-platform booking management',
+      ],
+      ru: [
+        'Создание внутренней системы управления отелем для оптимизации операционных процессов',
+        'Реализация планировщика бронирований с использованием DayPilot Scheduler',
+        'Интеграция с платформами бронирования Airbnb и Bronevik для кроссплатформенного управления',
+      ],
+    },
+    period: {
+      en: 'Aug — Dec 2024',
+      ru: 'Авг — Дек 2024',
+    },
+    color: '#3B82F6',
+  },
+  {
     slug: 'vite-dev-tools',
+    category: 'personal',
     title: { en: 'Vite Dev Tools', ru: 'Vite Dev Tools' },
     subtitle: {
       en: 'AI-powered devtools for Vite',
@@ -51,6 +147,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'wuhan-mahjong',
+    category: 'personal',
     title: { en: 'Wuhan Mahjong', ru: 'Wuhan Mahjong' },
     subtitle: {
       en: 'Real-time multiplayer mahjong game',
@@ -89,6 +186,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'marquer-mobile',
+    category: 'personal',
     title: { en: 'Marquer Mobile', ru: 'Marquer Mobile' },
     subtitle: {
       en: 'Flutter productivity app',
@@ -126,6 +224,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'marquer-backend',
+    category: 'personal',
     title: { en: 'Marquer Backend', ru: 'Marquer Backend' },
     subtitle: {
       en: 'Laravel REST API',
@@ -163,6 +262,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'auth-service',
+    category: 'personal',
     title: { en: 'Auth Service', ru: 'Auth Service' },
     subtitle: {
       en: 'JWT authentication service',
@@ -198,6 +298,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'analytics-service',
+    category: 'personal',
     title: { en: 'Analytics Service', ru: 'Analytics Service' },
     subtitle: {
       en: 'Go event collection service',
