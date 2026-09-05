@@ -119,7 +119,7 @@ export const translations = {
       sectionLabel: '// languages',
       items: [
         { name: 'Russian', level: 'Native' },
-        { name: 'English', level: 'B2 — Upper Intermediate' },
+        { name: 'English', level: 'C1 — Advanced' },
       ],
     },
     commercial: {
@@ -265,7 +265,7 @@ export const translations = {
       sectionLabel: '// языки',
       items: [
         { name: 'Русский', level: 'Родной' },
-        { name: 'Английский', level: 'B2 — Upper Intermediate' },
+        { name: 'Английский', level: 'C1 — Advanced' },
       ],
     },
     commercial: {
