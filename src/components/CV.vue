@@ -239,17 +239,27 @@ function projectHref(slug: string) {
             <h3 class="font-mono font-bold text-base">{{ job.company }}</h3>
             <span class="font-mono text-xs shrink-0 text-text-muted">
               {{ job.period }}
+              <span v-if="job.roles.length > 1" class="ml-2">· {{ job.duration }}</span>
             </span>
           </div>
-          <p class="text-accent font-mono text-sm mb-3">{{ job.role }}
-            <span class="font-mono text-xs ml-2 text-text-muted">{{ job.duration }}</span>
-          </p>
-          <ul class="space-y-2 list-none">
-            <li v-for="(desc, j) in job.description" :key="j"
-              class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 text-desc-text before:text-accent">
-              {{ desc }}
-            </li>
-          </ul>
+
+          <!-- Roles at this company, most recent first. A single-role entry needs
+               no per-role dates — the company header already carries them. -->
+          <div v-for="(role, r) in job.roles" :key="r"
+            :class="job.roles.length > 1 ? 'mb-6 last:mb-0 pl-4 border-l border-border' : ''">
+            <p class="text-accent font-mono text-sm mb-3">{{ role.title }}
+              <span v-if="job.roles.length > 1" class="font-mono text-xs ml-2 text-text-muted">
+                {{ role.period }} · {{ role.duration }}
+              </span>
+              <span v-else class="font-mono text-xs ml-2 text-text-muted">{{ role.duration }}</span>
+            </p>
+            <ul class="space-y-2 list-none">
+              <li v-for="(desc, j) in role.description" :key="j"
+                class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 text-desc-text before:text-accent">
+                {{ desc }}
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -285,7 +295,7 @@ function projectHref(slug: string) {
                 {{ tech }}
               </span>
             </div>
-            <span class="block font-mono text-xs text-accent mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="block font-mono text-xs text-accent mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 no-print">
               {{ t.projects.viewProject }} →
             </span>
           </a>

@@ -184,16 +184,37 @@ body {
   section:first-child { margin-top: 0 !important; }
   h1 { font-size: 2rem !important; }
 
-  /* Page-break safety — keep a role or degree whole, and never strand a
-     section heading at the foot of a page. */
+  /* Commercial projects are client work and belong in the resume (the personal
+     projects grid is marked no-print in the template). Stack the cards in one
+     column so the descriptions get full width on paper. */
+  #commercial .grid {
+    display: block !important;
+  }
+  #commercial .grid > a {
+    display: block;
+    margin-bottom: 0.75rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #commercial .grid > a:last-child { margin-bottom: 0; }
+
+  /* Page-break safety. Keep an individual role, degree or bullet whole — but
+     deliberately NOT the whole company block, which with several roles can be
+     taller than a page and would otherwise be pushed onto a fresh one. */
   h1, h2, h3 {
     break-after: avoid;
     page-break-after: avoid;
   }
-  section > div,
+  #experience > div > div,
+  #education > div,
   li {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+  /* Never leave a company name stranded at the foot of a page. */
+  #experience > div > div:first-child {
+    break-after: avoid;
+    page-break-after: avoid;
   }
 }
 
