@@ -14,6 +14,9 @@ export const translations = {
       projects: 'Projects',
       contact: 'Contact',
     },
+    actions: {
+      downloadResume: 'Download resume as PDF',
+    },
     hero: {
       name: 'Danila Dysa',
       title: 'Fullstack Developer',
@@ -26,7 +29,7 @@ export const translations = {
 
       items: [
         {
-          company: 'WEB THEMES DEVELOPMENT',
+          company: 'Stylemix',
           role: 'Fullstack Developer',
           period: 'Jun 2025 — Present',
           duration: '10 months',
@@ -41,7 +44,7 @@ export const translations = {
           ],
         },
         {
-          company: 'WEB THEMES DEVELOPMENT',
+          company: 'Stylemix',
           role: 'Frontend Developer',
           period: 'Apr — Jun 2025',
           duration: '3 months',
@@ -148,6 +151,9 @@ export const translations = {
       projects: 'Проекты',
       contact: 'Контакты',
     },
+    actions: {
+      downloadResume: 'Скачать резюме в PDF',
+    },
     hero: {
       name: 'Дыса Данила',
       title: 'Fullstack-разработчик',
@@ -160,7 +166,7 @@ export const translations = {
 
       items: [
         {
-          company: 'WEB THEMES DEVELOPMENT',
+          company: 'Stylemix',
           role: 'Fullstack-разработчик',
           period: 'Июн 2025 — настоящее время',
           duration: '10 месяцев',
@@ -175,7 +181,7 @@ export const translations = {
           ],
         },
         {
-          company: 'WEB THEMES DEVELOPMENT',
+          company: 'Stylemix',
           role: 'Frontend-разработчик',
           period: 'Апр — Июн 2025',
           duration: '3 месяца',

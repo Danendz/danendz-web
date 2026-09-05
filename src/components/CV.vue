@@ -28,6 +28,16 @@ function toggleTheme() {
   document.documentElement.classList.toggle('dark', isDark.value)
 }
 
+// Print-to-PDF. The title becomes the browser's suggested filename, so swap it
+// for the duration of the print and restore it afterwards. Latin in both langs —
+// Cyrillic filenames get mangled by some ATS uploads.
+function downloadResume() {
+  const prevTitle = document.title
+  document.title = props.lang === 'ru' ? 'Dysa_Danila_CV' : 'Danila_Dysa_CV'
+  window.addEventListener('afterprint', () => { document.title = prevTitle }, { once: true })
+  window.print()
+}
+
 // Active section tracking via IntersectionObserver + scroll for bottom detection
 let observer: IntersectionObserver | null = null
 let onScroll: (() => void) | null = null
@@ -130,6 +140,17 @@ function projectHref(slug: string) {
               RU
             </a>
           </div>
+          <!-- Resume download — opens the print dialog -->
+          <button @click="downloadResume"
+            class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none bg-toggle-bg hover:bg-toggle-hover-bg text-toggle-text hover:text-accent"
+            :aria-label="t.actions.downloadResume"
+            :title="t.actions.downloadResume">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
           <!-- Theme toggle — animated icon -->
           <button @click="toggleTheme"
             class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none bg-toggle-bg hover:bg-toggle-hover-bg text-toggle-text hover:text-accent"
@@ -274,7 +295,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Projects -->
-      <section id="projects" class="mt-24 scroll-mt-24">
+      <section id="projects" class="mt-24 scroll-mt-24 no-print">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.projects.sectionLabel }}
         </h2>

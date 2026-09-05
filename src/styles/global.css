@@ -134,17 +134,67 @@ body {
   transition: color 0.4s ease;
 }
 
-/* Print styles */
+/* Print styles — resume as a clean A4 document */
 @media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Every element colours itself through a --color-* utility, so `body { color }`
+     never reaches them. Redefine the tokens themselves — including under .dark,
+     so the output is identical whichever theme the visitor is using. */
+  :root,
+  .dark {
+    --color-bg: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-muted: #6b6560;
+    --color-border: #d5cfc5;
+    --color-surface: #ffffff;
+    --color-header-bg: #ffffff;
+    --color-body-text: #3a3530;
+    --color-desc-text: #4a4540;
+    --color-link-text: #3a3530;
+    --color-tag-bg: transparent;
+    --color-project-desc: #6b6560;
+    /* --color-accent stays #e8572a */
+  }
+
   .no-print { display: none !important; }
   html {
     background: white !important;
+    scroll-behavior: auto;
+    transition: none !important;
   }
   body {
     color: black !important;
+    transition: none !important;
   }
   body::after { display: none; }
   .noise-overlay::before { display: none; }
+
+  /* Density — the screen layout leaves pt-24 to clear a header that isn't
+     printed, and 6rem between sections. */
+  main {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-width: none !important;
+  }
+  section { margin-top: 1.75rem !important; }
+  section:first-child { margin-top: 0 !important; }
+  h1 { font-size: 2rem !important; }
+
+  /* Page-break safety — keep a role or degree whole, and never strand a
+     section heading at the foot of a page. */
+  h1, h2, h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  section > div,
+  li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 }
 
 /* Scrollbar styling */

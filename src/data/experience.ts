@@ -1,8 +1,8 @@
 import type { Lang } from '../i18n/translations'
 
 export const experienceDates = [
-  { start: '2025-06', end: null },       // WTD Fullstack — present
-  { start: '2025-04', end: '2025-06' },  // WTD Frontend
+  { start: '2025-06', end: null },       // Stylemix Fullstack — present
+  { start: '2025-04', end: '2025-06' },  // Stylemix Frontend
   { start: '2023-09', end: '2025-04' },  // Micros
   { start: '2024-08', end: '2024-12' },  // Inroomer (overlaps Micros)
 ]
