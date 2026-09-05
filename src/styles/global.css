@@ -134,17 +134,88 @@ body {
   transition: color 0.4s ease;
 }
 
-/* Print styles */
+/* Print styles — resume as a clean A4 document */
 @media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Every element colours itself through a --color-* utility, so `body { color }`
+     never reaches them. Redefine the tokens themselves — including under .dark,
+     so the output is identical whichever theme the visitor is using. */
+  :root,
+  .dark {
+    --color-bg: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-muted: #6b6560;
+    --color-border: #d5cfc5;
+    --color-surface: #ffffff;
+    --color-header-bg: #ffffff;
+    --color-body-text: #3a3530;
+    --color-desc-text: #4a4540;
+    --color-link-text: #3a3530;
+    --color-tag-bg: transparent;
+    --color-project-desc: #6b6560;
+    /* --color-accent stays #e8572a */
+  }
+
   .no-print { display: none !important; }
   html {
     background: white !important;
+    scroll-behavior: auto;
+    transition: none !important;
   }
   body {
     color: black !important;
+    transition: none !important;
   }
   body::after { display: none; }
   .noise-overlay::before { display: none; }
+
+  /* Density — the screen layout leaves pt-24 to clear a header that isn't
+     printed, and 6rem between sections. */
+  main {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-width: none !important;
+  }
+  section { margin-top: 1.75rem !important; }
+  section:first-child { margin-top: 0 !important; }
+  h1 { font-size: 2rem !important; }
+
+  /* Commercial projects are client work and belong in the resume (the personal
+     projects grid is marked no-print in the template). Stack the cards in one
+     column so the descriptions get full width on paper. */
+  #commercial .grid {
+    display: block !important;
+  }
+  #commercial .grid > a {
+    display: block;
+    margin-bottom: 0.75rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #commercial .grid > a:last-child { margin-bottom: 0; }
+
+  /* Page-break safety. Keep an individual role, degree or bullet whole — but
+     deliberately NOT the whole company block, which with several roles can be
+     taller than a page and would otherwise be pushed onto a fresh one. */
+  h1, h2, h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  #experience > div > div,
+  #education > div,
+  li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Never leave a company name stranded at the foot of a page. */
+  #experience > div > div:first-child {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
 }
 
 /* Scrollbar styling */

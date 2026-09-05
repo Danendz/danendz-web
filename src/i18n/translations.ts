@@ -15,6 +15,9 @@ export const translations = {
       projects: 'Personal',
       contact: 'Contact',
     },
+    actions: {
+      downloadResume: 'Download resume as PDF',
+    },
     hero: {
       name: 'Danila Dysa',
       title: 'Fullstack Developer',
@@ -25,43 +28,57 @@ export const translations = {
     experience: {
       sectionLabel: '// experience',
 
+      // One entry per company. Consecutive roles at the same employer are nested
+      // under `roles` so the company name and span appear once; the entry-level
+      // period/duration covers the whole tenure.
       items: [
         {
-          company: 'WEB THEMES DEVELOPMENT',
-          role: 'Fullstack Developer',
-          period: 'Jun 2025 — Jun 2026',
-          duration: '1 year 1 month',
-          description: [
-            'Fullstack WordPress developer — plugins, themes, backend (REST API, AJAX) and frontend (JS, jQuery, React)',
-            'OpenAI API integration — auto-generation of images, text, and JSON for courses, lessons, FAQ, and quizzes, significantly reducing manual content work',
-            'Refactored from Vue to jQuery — removed legacy Vue 2 used only in isolated parts while the rest of the codebase was jQuery, eliminating an unnecessary dependency',
-            'Migrated React app from CRACO to Vite + Turborepo monorepo — build time reduced from 3 min to 7 sec (~25x), HMR from 1-2s to 100ms, dev server start from 10-20s to 1s',
-            'Custom icon system — built an icon font generator from SVG with SCSS helpers and unicode caching',
-            'Dynamic React integration into WordPress admin — seamless SPA embedding in the admin panel',
-            'AI tools in workflow — Cursor, Claude Code and AI code review used as agents to accelerate development while maintaining full control over architecture',
-          ],
-        },
-        {
-          company: 'WEB THEMES DEVELOPMENT',
-          role: 'Frontend Developer',
-          period: 'Apr — Jun 2025',
-          duration: '3 months',
-          description: [
-            'Developed frontend for WordPress plugins using React and Chakra UI',
+          company: 'Stylemix',
+          period: 'Apr 2025 — Jun 2026',
+          duration: '1 year 3 months',
+          roles: [
+            {
+              title: 'Fullstack Developer',
+              period: 'Jun 2025 — Jun 2026',
+              duration: '1 year 1 month',
+              description: [
+                'Fullstack WordPress developer — plugins, themes, backend (REST API, AJAX) and frontend (JS, jQuery, React)',
+                'OpenAI API integration — auto-generation of images, text, and JSON for courses, lessons, FAQ, and quizzes, significantly reducing manual content work',
+                'Refactored from Vue to jQuery — removed legacy Vue 2 used only in isolated parts while the rest of the codebase was jQuery, eliminating an unnecessary dependency',
+                'Migrated React app from CRACO to Vite + Turborepo monorepo — build time reduced from 3 min to 7 sec (~25x), HMR from 1-2s to 100ms, dev server start from 10-20s to 1s',
+                'Custom icon system — built an icon font generator from SVG with SCSS helpers and unicode caching',
+                'Dynamic React integration into WordPress admin — seamless SPA embedding in the admin panel',
+                'AI tools in workflow — Cursor, Claude Code and AI code review used as agents to accelerate development while maintaining full control over architecture',
+              ],
+            },
+            {
+              title: 'Frontend Developer',
+              period: 'Apr — Jun 2025',
+              duration: '3 months',
+              description: [
+                'Developed frontend for WordPress plugins using React and Chakra UI',
+              ],
+            },
           ],
         },
         {
           company: 'Micros Development',
-          role: 'Frontend Developer',
           period: 'Sep 2023 — Apr 2025',
           duration: '1 year 8 months',
-          description: [
-            'Built a banking SPA on Vue 3 + TypeScript with Vuetify and Pinia',
-            'Designed and implemented micro-frontend architecture for a large-scale application',
-            'Worked with WebSocket and JSON API',
-            'Full Vite configuration and custom plugin development for project needs',
-            'Integrated face recognition service for user identification',
-            'Built a script to generate .d.ts type files across micro-frontend projects',
+          roles: [
+            {
+              title: 'Frontend Developer',
+              period: 'Sep 2023 — Apr 2025',
+              duration: '1 year 8 months',
+              description: [
+                'Built a banking SPA on Vue 3 + TypeScript with Vuetify and Pinia',
+                'Designed and implemented micro-frontend architecture for a large-scale application',
+                'Worked with WebSocket and JSON API',
+                'Full Vite configuration and custom plugin development for project needs',
+                'Integrated face recognition service for user identification',
+                'Built a script to generate .d.ts type files across micro-frontend projects',
+              ],
+            },
           ],
         },
       ],
@@ -102,7 +119,7 @@ export const translations = {
       sectionLabel: '// languages',
       items: [
         { name: 'Russian', level: 'Native' },
-        { name: 'English', level: 'B2 — Upper Intermediate' },
+        { name: 'English', level: 'C1 — Advanced' },
       ],
     },
     commercial: {
@@ -147,6 +164,9 @@ export const translations = {
       projects: 'Личные',
       contact: 'Контакты',
     },
+    actions: {
+      downloadResume: 'Скачать резюме в PDF',
+    },
     hero: {
       name: 'Дыса Данила',
       title: 'Fullstack-разработчик',
@@ -159,41 +179,52 @@ export const translations = {
 
       items: [
         {
-          company: 'WEB THEMES DEVELOPMENT',
-          role: 'Fullstack-разработчик',
-          period: 'Июн 2025 — Июн 2026',
-          duration: '1 год 1 месяц',
-          description: [
-            'Фуллстек WordPress-разработчик — плагины, темы, бэкенд (REST API, AJAX) и фронтенд (JS, jQuery, React)',
-            'Интеграция OpenAI API — автогенерация изображений, текстов и JSON для создания курсов, уроков, FAQ и квизов, что значительно сократило ручную работу по контенту',
-            'Рефакторинг с Vue на jQuery — удалил легаси Vue 2, который использовался лишь в отдельных частях проекта, убрал лишнюю зависимость и привёл стек к единообразию',
-            'Миграция React-приложения с CRACO на Vite + монорепо на Turborepo — билд ускорен с 3 минут до 7 секунд (~25 раз), HMR с 1–2с до 100мс, старт dev-сервера с 10–20с до 1с',
-            'Кастомная система иконок — скрипт генерации иконфонта из SVG с SCSS-хелперами и кэшированием юникодов',
-            'Динамическая интеграция React в WordPress-админку — бесшовное встраивание SPA в панель администратора',
-            'AI-инструменты в рабочем процессе — Cursor, Claude Code и AI-ревью кода для ускорения разработки при полном контроле над архитектурой',
-          ],
-        },
-        {
-          company: 'WEB THEMES DEVELOPMENT',
-          role: 'Frontend-разработчик',
-          period: 'Апр — Июн 2025',
-          duration: '3 месяца',
-          description: [
-            'Разработка frontend части плагинов для WordPress используя React, Chakra UI',
+          company: 'Stylemix',
+          period: 'Апр 2025 — Июн 2026',
+          duration: '1 год 3 месяца',
+          roles: [
+            {
+              title: 'Fullstack-разработчик',
+              period: 'Июн 2025 — Июн 2026',
+              duration: '1 год 1 месяц',
+              description: [
+                'Фуллстек WordPress-разработчик — плагины, темы, бэкенд (REST API, AJAX) и фронтенд (JS, jQuery, React)',
+                'Интеграция OpenAI API — автогенерация изображений, текстов и JSON для создания курсов, уроков, FAQ и квизов, что значительно сократило ручную работу по контенту',
+                'Рефакторинг с Vue на jQuery — удалил легаси Vue 2, который использовался лишь в отдельных частях проекта, убрал лишнюю зависимость и привёл стек к единообразию',
+                'Миграция React-приложения с CRACO на Vite + монорепо на Turborepo — билд ускорен с 3 минут до 7 секунд (~25 раз), HMR с 1–2с до 100мс, старт dev-сервера с 10–20с до 1с',
+                'Кастомная система иконок — скрипт генерации иконфонта из SVG с SCSS-хелперами и кэшированием юникодов',
+                'Динамическая интеграция React в WordPress-админку — бесшовное встраивание SPA в панель администратора',
+                'AI-инструменты в рабочем процессе — Cursor, Claude Code и AI-ревью кода для ускорения разработки при полном контроле над архитектурой',
+              ],
+            },
+            {
+              title: 'Frontend-разработчик',
+              period: 'Апр — Июн 2025',
+              duration: '3 месяца',
+              description: [
+                'Разработка frontend части плагинов для WordPress используя React, Chakra UI',
+              ],
+            },
           ],
         },
         {
           company: 'Micros Development',
-          role: 'Frontend-разработчик',
           period: 'Сен 2023 — Апр 2025',
           duration: '1 год 8 месяцев',
-          description: [
-            'Разработка банковского SPA на Vue 3 и TypeScript с использованием Vuetify и Pinia',
-            'Разработка и реализация micro-frontend архитектуры на большом приложении',
-            'Работа с WebSocket и JSON API',
-            'Полная настройка Vite и написание кастомных плагинов под нужды проекта',
-            'Интегрирование сервиса распознавания лиц для идентификации пользователя',
-            'Скрипт генерации .d.ts файлов для типов с разных micro-frontend проектов',
+          roles: [
+            {
+              title: 'Frontend-разработчик',
+              period: 'Сен 2023 — Апр 2025',
+              duration: '1 год 8 месяцев',
+              description: [
+                'Разработка банковского SPA на Vue 3 и TypeScript с использованием Vuetify и Pinia',
+                'Разработка и реализация micro-frontend архитектуры на большом приложении',
+                'Работа с WebSocket и JSON API',
+                'Полная настройка Vite и написание кастомных плагинов под нужды проекта',
+                'Интегрирование сервиса распознавания лиц для идентификации пользователя',
+                'Скрипт генерации .d.ts файлов для типов с разных micro-frontend проектов',
+              ],
+            },
           ],
         },
       ],
@@ -234,7 +265,7 @@ export const translations = {
       sectionLabel: '// языки',
       items: [
         { name: 'Русский', level: 'Родной' },
-        { name: 'Английский', level: 'B2 — Upper Intermediate' },
+        { name: 'Английский', level: 'C1 — Advanced' },
       ],
     },
     commercial: {

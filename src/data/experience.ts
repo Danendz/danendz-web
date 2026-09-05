@@ -1,8 +1,8 @@
 import type { Lang } from '../i18n/translations'
 
 export const experienceDates = [
-  { start: '2025-06', end: '2026-06' },  // WTD Fullstack
-  { start: '2025-04', end: '2025-06' },  // WTD Frontend
+  { start: '2025-06', end: '2026-06' },  // Stylemix Fullstack
+  { start: '2025-04', end: '2025-06' },  // Stylemix Frontend
   { start: '2023-09', end: '2025-04' },  // Micros
   // Inroomer is listed under Commercial Projects, not Experience, but it was
   // paid work and still counts toward the total. Overlaps Micros.

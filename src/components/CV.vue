@@ -32,6 +32,16 @@ function toggleTheme() {
   document.documentElement.classList.toggle('dark', isDark.value)
 }
 
+// Print-to-PDF. The title becomes the browser's suggested filename, so swap it
+// for the duration of the print and restore it afterwards. Latin in both langs —
+// Cyrillic filenames get mangled by some ATS uploads.
+function downloadResume() {
+  const prevTitle = document.title
+  document.title = props.lang === 'ru' ? 'Dysa_Danila_CV' : 'Danila_Dysa_CV'
+  window.addEventListener('afterprint', () => { document.title = prevTitle }, { once: true })
+  window.print()
+}
+
 // Active section tracking via IntersectionObserver + scroll for bottom detection
 let observer: IntersectionObserver | null = null
 let onScroll: (() => void) | null = null
@@ -137,6 +147,17 @@ function projectHref(slug: string) {
               RU
             </a>
           </div>
+          <!-- Resume download — opens the print dialog -->
+          <button @click="downloadResume"
+            class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none bg-toggle-bg hover:bg-toggle-hover-bg text-toggle-text hover:text-accent"
+            :aria-label="t.actions.downloadResume"
+            :title="t.actions.downloadResume">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
           <!-- Theme toggle — animated icon -->
           <button @click="toggleTheme"
             class="relative w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 outline-none border-none bg-toggle-bg hover:bg-toggle-hover-bg text-toggle-text hover:text-accent"
@@ -218,17 +239,27 @@ function projectHref(slug: string) {
             <h3 class="font-mono font-bold text-base">{{ job.company }}</h3>
             <span class="font-mono text-xs shrink-0 text-text-muted">
               {{ job.period }}
+              <span v-if="job.roles.length > 1" class="ml-2">· {{ job.duration }}</span>
             </span>
           </div>
-          <p class="text-accent font-mono text-sm mb-3">{{ job.role }}
-            <span class="font-mono text-xs ml-2 text-text-muted">{{ job.duration }}</span>
-          </p>
-          <ul class="space-y-2 list-none">
-            <li v-for="(desc, j) in job.description" :key="j"
-              class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 text-desc-text before:text-accent">
-              {{ desc }}
-            </li>
-          </ul>
+
+          <!-- Roles at this company, most recent first. A single-role entry needs
+               no per-role dates — the company header already carries them. -->
+          <div v-for="(role, r) in job.roles" :key="r"
+            :class="job.roles.length > 1 ? 'mb-6 last:mb-0 pl-4 border-l border-border' : ''">
+            <p class="text-accent font-mono text-sm mb-3">{{ role.title }}
+              <span v-if="job.roles.length > 1" class="font-mono text-xs ml-2 text-text-muted">
+                {{ role.period }} · {{ role.duration }}
+              </span>
+              <span v-else class="font-mono text-xs ml-2 text-text-muted">{{ role.duration }}</span>
+            </p>
+            <ul class="space-y-2 list-none">
+              <li v-for="(desc, j) in role.description" :key="j"
+                class="text-sm leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 text-desc-text before:text-accent">
+                {{ desc }}
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -264,7 +295,7 @@ function projectHref(slug: string) {
                 {{ tech }}
               </span>
             </div>
-            <span class="block font-mono text-xs text-accent mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="block font-mono text-xs text-accent mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 no-print">
               {{ t.projects.viewProject }} →
             </span>
           </a>
@@ -320,7 +351,7 @@ function projectHref(slug: string) {
       </section>
 
       <!-- Projects -->
-      <section id="projects" class="mt-24 scroll-mt-24">
+      <section id="projects" class="mt-24 scroll-mt-24 no-print">
         <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
           {{ t.projects.sectionLabel }}
         </h2>
