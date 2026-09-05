@@ -6,6 +6,10 @@ import { calcTotalExperience } from '../data/experience'
 
 const props = defineProps<{ lang: Lang }>()
 
+// Single source of truth: drives the nav links, the mobile menu and the
+// IntersectionObserver targets. Order matches the section order in the template.
+const SECTION_IDS = ['about', 'experience', 'commercial', 'skills', 'education', 'projects', 'contact'] as const
+
 const isDark = ref(typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true)
 const activeSection = ref('')
 const menuOpen = ref(false)
@@ -45,7 +49,7 @@ let onScroll: (() => void) | null = null
 onMounted(() => {
   isDark.value = document.documentElement.classList.contains('dark')
 
-  const sectionIds = ['about', 'experience', 'skills', 'education', 'projects', 'contact']
+  const sectionIds = SECTION_IDS
 
   function updateActive() {
     const nearBottom = document.documentElement.scrollHeight - window.scrollY - window.innerHeight < 50
@@ -89,6 +93,9 @@ onUnmounted(() => {
   if (onScroll) window.removeEventListener('scroll', onScroll)
 })
 
+const commercialProjects = computed(() => projects.filter((p) => p.category === 'commercial'))
+const personalProjects = computed(() => projects.filter((p) => p.category === 'personal'))
+
 function projectTitle(p: typeof projects[0]) {
   return p.title[props.lang]
 }
@@ -114,7 +121,7 @@ function projectHref(slug: string) {
             <span class="block w-full h-0.5 bg-current transition-all duration-300 origin-center text-text-muted"
               :class="menuOpen ? '-rotate-45 -translate-y-[7px]' : ''"></span>
           </button>
-          <a v-for="key in ['about', 'experience', 'skills', 'education', 'projects', 'contact']"
+          <a v-for="key in SECTION_IDS"
             :key="key"
             :href="`#${key}`"
             class="hidden sm:inline-block transition-colors duration-200"
@@ -187,7 +194,7 @@ function projectHref(slug: string) {
         <div v-show="menuOpen" class="sm:hidden grid border-t border-border bg-header-bg">
           <div class="overflow-hidden">
             <div class="max-w-[780px] mx-auto px-6 py-3 flex flex-col gap-2">
-              <a v-for="key in ['about', 'experience', 'skills', 'education', 'projects', 'contact']"
+              <a v-for="key in SECTION_IDS"
                 :key="key"
                 :href="`#${key}`"
                 @click="closeMenu"
@@ -243,6 +250,45 @@ function projectHref(slug: string) {
               {{ desc }}
             </li>
           </ul>
+        </div>
+      </section>
+
+      <!-- Commercial projects -->
+      <section id="commercial" class="mt-24 scroll-mt-24">
+        <h2 class="font-mono text-sm tracking-widest uppercase mb-1 text-text-muted">
+          {{ t.commercial.sectionLabel }}
+        </h2>
+        <hr class="mb-2 border-border" />
+        <p class="font-mono text-xs mb-8 text-text-muted">
+          {{ t.commercial.subtitle }}
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a v-for="p in commercialProjects" :key="p.slug"
+            :href="projectHref(p.slug)"
+            class="group block p-5 rounded-sm border transition-all duration-300 hover:-translate-y-0.5 border-border hover:border-accent/50 bg-surface hover:shadow-lg hover:shadow-accent/5">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full" :style="{ backgroundColor: p.color }"></span>
+              <h3 class="font-mono font-bold text-sm group-hover:text-accent transition-colors">
+                {{ projectTitle(p) }}
+              </h3>
+            </div>
+            <p v-if="p.period" class="font-mono text-[10px] mb-2 text-text-muted">
+              {{ p.period[lang] }}
+            </p>
+            <p class="text-xs leading-relaxed mb-3 text-project-desc">
+              {{ projectSubtitle(p) }}
+            </p>
+            <div class="flex flex-wrap gap-1.5">
+              <span v-for="tech in p.tech.slice(0, 4)" :key="tech"
+                class="font-mono text-[10px] px-1.5 py-0.5 rounded-sm bg-tag-bg text-text-muted">
+                {{ tech }}
+              </span>
+            </div>
+            <span class="block font-mono text-xs text-accent mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {{ t.projects.viewProject }} →
+            </span>
+          </a>
         </div>
       </section>
 
@@ -305,7 +351,7 @@ function projectHref(slug: string) {
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a v-for="p in projects" :key="p.slug"
+          <a v-for="p in personalProjects" :key="p.slug"
             :href="projectHref(p.slug)"
             class="group block p-5 rounded-sm border transition-all duration-300 hover:-translate-y-0.5 border-border hover:border-accent/50 bg-surface hover:shadow-lg hover:shadow-accent/5">
             <div class="flex items-center gap-2 mb-2">
