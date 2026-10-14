@@ -394,7 +394,7 @@ function projectHref(slug: string) {
         <hr class="mb-8 border-border" />
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a href="https://t.me/getaltzrivii" target="_blank" rel="noopener"
+          <a href="https://t.me/danendz" target="_blank" rel="noopener"
             class="font-mono text-sm hover:text-accent transition-colors group flex items-baseline gap-2 text-link-text">
             <span class="text-accent text-xs">tg</span>
             <span>{{ t.contact.telegram }}</span>

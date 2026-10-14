@@ -1,0 +1,10 @@
+{
+  "name": "danendz-web",
+  "compatibility_date": "2026-10-14",
+  // Static Astro build — no Worker script, just assets.
+  "assets": {
+    "directory": "./dist"
+  },
+  // Required by `wrangler preview` for PR preview builds; empty = inherit top-level settings.
+  "previews": {}
+}
