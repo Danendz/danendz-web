@@ -1,12 +1,12 @@
 import type { Lang } from '../i18n/translations'
 
 export const experienceDates = [
-  { start: '2025-06', end: '2026-06' },  // Stylemix Fullstack
-  { start: '2025-04', end: '2025-06' },  // Stylemix Frontend
-  { start: '2023-09', end: '2025-04' },  // Micros
-  // Inroomer is listed under Commercial Projects, not Experience, but it was
-  // paid work and still counts toward the total. Overlaps Micros.
-  { start: '2024-08', end: '2024-12' },  // Inroomer
+  // No end = ongoing; calcTotalExperience counts up to the current month.
+  { start: '2026-06' },                  // Modmate
+  { start: '2025-04', end: '2026-06' },  // Stylemix (both roles)
+  { start: '2023-07', end: '2025-04' },  // Rahmat (multibank.uz)
+  { start: '2022-11', end: '2023-06' },  // Inroomer
+  { start: '2021-11', end: '2022-10' },  // Freelance
 ]
 
 function parseYM(ym: string): { y: number; m: number } {
